@@ -10,12 +10,16 @@ import nicos.controller.betting_table_controller.IBettingTableController;
 import nicos.controller.game_controller.GameController;
 import nicos.controller.roulette_controller.IRoulleteController;
 import nicos.controller.roulette_controller.RouletteController;
+import nicos.controller.rules_controller.IRulesController;
+import nicos.controller.rules_controller.RulesController;
 import nicos.model.betting_table.BettingTableModel;
 import nicos.model.betting_table.IBettingTableModel;
 import nicos.model.game.GameModel;
 import nicos.model.game.IGameModel;
 import nicos.model.roulette.IRouletteModel;
 import nicos.model.roulette.RouletteModel;
+import nicos.model.rules.IRulesModel;
+import nicos.model.rules.RulesModel;
 import nicos.view.betting_table_node.BettingTableNode;
 import nicos.view.betting_table_node.IBettingTableNode;
 import nicos.view.components.IComponent;
@@ -26,6 +30,8 @@ import nicos.view.game_node.IGameNode;
 import nicos.view.game_pane.GamePane;
 import nicos.view.roulette_node.IRouletteNode;
 import nicos.view.roulette_node.RouletteNode;
+import nicos.view.rules_node.IRulesNode;
+import nicos.view.rules_node.RulesNode;
 
 public class App extends Application{
     public static void main(String[] args) {
@@ -37,7 +43,9 @@ public class App extends Application{
         IController gameController = createGame();
         IController rouletteController = createRoullete();
         IController bettingTableController = createBettingTable();
+        IController rulesController = createRules();
 
+        gameController.addController("RulesController", rulesController);
         gameController.addController("RouletteController", rouletteController);
         gameController.addController("BettingTableController", bettingTableController);
         
@@ -57,6 +65,13 @@ public class App extends Application{
         stage.show();
     }
 
+    private IController createRules() {
+        IRulesNode rulesNode = new RulesNode();
+        IRulesModel rulesModel = new RulesModel();
+        IRulesController rulesController = new RulesController(rulesModel, rulesNode);
+        return rulesController;
+    }
+
     private IController createBettingTable() {
         IBettingTableModel bettingTableModel = new BettingTableModel();
         IBettingTableNode bettingTableNode = createBettingTableNode();
@@ -68,14 +83,61 @@ public class App extends Application{
     }
     private IBettingTableNode createBettingTableNode(){
         IBettingTableNode bettingTableNode = new BettingTableNode();
-        IComponent number1 = new MessageComponent("○", 440, 260, Color.YELLOW);
-        IComponent number2 = new MessageComponent("○", 440, 200, Color.YELLOW);
-        IComponent number3 = new MessageComponent("○", 440, 140, Color.YELLOW);
 
-        //○ ●
-        bettingTableNode.addComponent("number1", number1);
-        bettingTableNode.addComponent("number2", number2);
-        bettingTableNode.addComponent("number3", number3);
+        // number 0
+        IComponent number = new MessageComponent("○", 390, 203, Color.RED);
+        bettingTableNode.addComponent("number"+0, number);
+
+        //numbers 1, 2, 3
+        int positionX = 440;
+        for(int i = 1; i<=34;i+=3){
+            int positionY=260;
+            System.out.println("i " + i);
+            for(int j = i; j<i+3;j++){
+                //○ ●
+                number = new MessageComponent("○", positionX, positionY, Color.YELLOW);
+                bettingTableNode.addComponent("number"+j, number);
+                positionY -= 60;
+                System.out.println("j "+j);
+            }
+            positionX += 42;
+        }
+        //numbers 1+4, 2+5
+        positionX = 440;
+        for(int i = 1; i<36;i+=3){
+            int positionY=236;
+            for(int j = i; j<i+2; j++){
+                //○ ●
+                number = new MessageComponent("○", positionX, positionY, Color.BLUE);
+                bettingTableNode.addComponent("number"+ j +""+j+3, number);
+                positionY -= 60;
+            }
+            positionX += 42;
+        }
+        //numbers 1+2,2+3
+        positionX = 460;
+        for(int i = 1; i<33;i+=3){
+            int positionY=260;
+            for(int j = i+1; j<i+3; j++){
+                //○ ●
+                number = new MessageComponent("○", positionX, positionY, Color.VIOLET);
+                bettingTableNode.addComponent("number"+ (j-1) +""+j, number);
+                positionY -= 60;
+            }
+            positionX += 42;
+        }
+        //numbers 1+2+4+5
+        positionX = 460;
+        for(int i = 1; i<33;i+=3){
+            int positionY=230;
+            for(int j = i+1; j<i+3; j++){
+                //○ ●
+                number = new MessageComponent("○", positionX, positionY, Color.GRAY);
+                bettingTableNode.addComponent("number"+ (j-1) +""+j +""+(j-1)+3+""+j+3, number);
+                positionY -= 60;
+            }
+            positionX += 42;
+        }
 
         return bettingTableNode;
     }

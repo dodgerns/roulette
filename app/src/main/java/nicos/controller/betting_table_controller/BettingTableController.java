@@ -3,7 +3,6 @@ package nicos.controller.betting_table_controller;
 import java.util.HashMap;
 
 import nicos.controller.IController;
-import nicos.controller.roulette_controller.IRoulleteController;
 import nicos.model.betting_table.IBettingTableModel;
 import nicos.view.betting_table_node.IBettingTableNode;
 import nicos.view.components.IComponent;
