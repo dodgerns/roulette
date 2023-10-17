@@ -86,42 +86,40 @@ public class App extends Application{
 
         // number 0
         IComponent number = new MessageComponent("○", 390, 203, Color.RED);
-        bettingTableNode.addComponent("number"+0, number);
+        bettingTableNode.addComponent(0+"", number);
 
         //numbers 1, 2, 3
         int positionX = 440;
         for(int i = 1; i<=34;i+=3){
             int positionY=260;
-            System.out.println("i " + i);
             for(int j = i; j<i+3;j++){
                 //○ ●
                 number = new MessageComponent("○", positionX, positionY, Color.YELLOW);
-                bettingTableNode.addComponent("number"+j, number);
+                bettingTableNode.addComponent(j+"", number);
                 positionY -= 60;
-                System.out.println("j "+j);
             }
             positionX += 42;
         }
-        //numbers 1+4, 2+5
+        //numbers 1+2, 2+3
         positionX = 440;
-        for(int i = 1; i<36;i+=3){
+        for(int i = 1; i<=36;i+=3){
             int positionY=236;
             for(int j = i; j<i+2; j++){
                 //○ ●
                 number = new MessageComponent("○", positionX, positionY, Color.BLUE);
-                bettingTableNode.addComponent("number"+ j +""+j+3, number);
+                bettingTableNode.addComponent( j +"-"+j+1, number);
                 positionY -= 60;
             }
             positionX += 42;
         }
-        //numbers 1+2,2+3
+        //numbers 1+4,2+5
         positionX = 460;
         for(int i = 1; i<33;i+=3){
             int positionY=260;
-            for(int j = i+1; j<i+3; j++){
+            for(int j = i; j<i+3; j++){
                 //○ ●
-                number = new MessageComponent("○", positionX, positionY, Color.VIOLET);
-                bettingTableNode.addComponent("number"+ (j-1) +""+j, number);
+                number = new MessageComponent("○", positionX, positionY, Color.WHITE);
+                bettingTableNode.addComponent(j +"-"+(j+3), number);
                 positionY -= 60;
             }
             positionX += 42;
@@ -132,9 +130,10 @@ public class App extends Application{
             int positionY=230;
             for(int j = i+1; j<i+3; j++){
                 //○ ●
-                number = new MessageComponent("○", positionX, positionY, Color.GRAY);
-                bettingTableNode.addComponent("number"+ (j-1) +""+j +""+(j-1)+3+""+j+3, number);
+                number = new MessageComponent("○", positionX, positionY, Color.SPRINGGREEN);
+                bettingTableNode.addComponent((j-1) +"-"+ j +"-"+((j-1)+3)+"-"+(j+3), number);
                 positionY -= 60;
+                System.out.println((j-1) +"-"+ j +"-"+((j-1)+3)+"-"+(j+3));
             }
             positionX += 42;
         }
