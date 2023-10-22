@@ -3,7 +3,7 @@ package nicos.controller.betting_table_controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import nicos.controller.IController;
+import nicos.controller.AController;
 import nicos.controller.betting_controller.IBettingController;
 import nicos.controller.betting_controller.BettingController;
 import nicos.controller.user_controller.IUserController;
@@ -15,17 +15,16 @@ import nicos.view.betting_table_node.IBettingTableNode;
 import nicos.view.components.IComponent;
 import nicos.view.components.TextInputComponent;
 
-public class BettingTableController implements IBettingTableController{
+public class BettingTableController extends AController implements IBettingTableController{
 
-    private HashMap<String, IController> controllers;
     private IBettingTableModel bettingTableModel;
     private IBettingTableNode bettingTableNode;
 
     public BettingTableController(){
-        controllers = new HashMap<>();
+        super();
     }
     public BettingTableController(IBettingTableModel bettingTableModel, IBettingTableNode bettingTableNode){
-        controllers = new HashMap<>();
+        super();
         this.bettingTableModel = bettingTableModel;
         this.bettingTableNode = bettingTableNode;
     }
@@ -34,7 +33,7 @@ public class BettingTableController implements IBettingTableController{
     public HashMap<String, IComponent> getComponents() {
         HashMap<String, IComponent> components = new HashMap<>();
         components.putAll(bettingTableNode.getComponents());
-        for (IController controller : controllers.values()) {
+        for (AController controller : controllers.values()) {
             components.putAll(controller.getComponents());
         }
         return components;
@@ -48,7 +47,7 @@ public class BettingTableController implements IBettingTableController{
     }
 
     @Override
-    public void addController(String key, IController Controller) {
+    public void addController(String key, AController Controller) {
         controllers.put(key, Controller);
     }
 

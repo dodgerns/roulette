@@ -4,15 +4,11 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import nicos.controller.IController;
+import nicos.controller.AController;
 import nicos.controller.betting_controller.BettingController;
-import nicos.controller.betting_controller.IBettingController;
 import nicos.controller.betting_table_controller.BettingTableController;
-import nicos.controller.betting_table_controller.IBettingTableController;
 import nicos.controller.game_controller.GameController;
-import nicos.controller.roulette_controller.IRoulleteController;
 import nicos.controller.roulette_controller.RouletteController;
-import nicos.controller.user_controller.IUserController;
 import nicos.controller.user_controller.UserController;
 import nicos.model.betting.BettingModel;
 import nicos.model.betting.IBettingModel;
@@ -26,6 +22,7 @@ import nicos.model.roulette.IRouletteModel;
 import nicos.model.roulette.RouletteModel;
 import nicos.model.user.IUserModel;
 import nicos.model.user.UserModel;
+import nicos.view.ANode;
 import nicos.view.betting_node.BettingNode;
 import nicos.view.betting_node.IBettingNode;
 import nicos.view.betting_table_node.BettingTableNode;
@@ -48,15 +45,15 @@ public class App extends Application{
 
     @Override
     public void start(Stage stage) throws Exception {
-        IController gameController = createGame();
-        IController rouletteController = createRoullete();
-        IController bettingTableController = createBettingTable();
+        AController gameController = createGame();
+        AController rouletteController = createRoullete();
+        AController bettingTableController = createBettingTable();
 
         gameController.addController("RouletteController", rouletteController);
         gameController.addController("BettingTableController", bettingTableController);
 
 
-        IGameNode gameNode = new GameNode();
+        ANode gameNode = new GameNode();
         gameNode.addComponents(gameController.getComponents());
 
         gameController.setConfig();
@@ -71,10 +68,10 @@ public class App extends Application{
         stage.show();
     }
 
-    private IController createBetting() {
+    private AController createBetting() {
         IBettingNode bettingNode = new BettingNode();
         IBettingModel bettingModel = new BettingModel();
-        IBettingController bettingController = new BettingController(bettingModel, bettingNode);
+        AController bettingController = new BettingController(bettingModel, bettingNode);
 
         bettingModel.addPrize( Integer.toString(18),  Double.toString(1));
         bettingModel.addPrize( Integer.toString(12),  Double.toString(2));
@@ -88,10 +85,10 @@ public class App extends Application{
         return bettingController;
     }
 
-    private IController createUser() {
+    private AController createUser() {
         IUserNode userNode = new UserNode();
         IUserModel userModel = new UserModel();
-        IUserController userController = new UserController(userModel, userNode);
+        AController userController = new UserController(userModel, userNode);
 
         ICasinoChip casinoChip = new CasinoChip();
         casinoChip.setChips(100, 10);
@@ -101,14 +98,10 @@ public class App extends Application{
         return userController;
     }
     
-    private IController createGame() {
+    private AController createGame() {
         IGameModel gameModel = new GameModel();
         IGameNode gameNode = new GameNode();
-        IController gameController = new GameController(gameModel, gameNode);
-/*
-        IComponent startGame = new OnClickSectorComponent("Iniciar Ronda", 150, 428, Color.BEIGE);
-        gameNode.addComponent("startGame", startGame);
-*/
+        AController gameController = new GameController(gameModel, gameNode);
 
         ButtonComponent userState= new ButtonComponent("Estado", 800, 470);
         gameNode.addComponent("UserState", userState);
@@ -122,10 +115,10 @@ public class App extends Application{
         return gameController;
     }
 
-    private IRoulleteController createRoullete(){
+    private AController createRoullete(){
         IRouletteModel rouletteModel = new RouletteModel();
         IRouletteNode rouletteNode = new RouletteNode();
-        IRoulleteController rouletteController = new RouletteController(rouletteModel, rouletteNode);
+        AController rouletteController = new RouletteController(rouletteModel, rouletteNode);
 
         IComponent messageInformationNumber = new MessageComponent("Número Ganador: ", 155, 50, Color.BEIGE);
         IComponent messageWinningNumber = new MessageComponent("-", 185, 72, Color.BEIGE);
@@ -138,13 +131,13 @@ public class App extends Application{
         return rouletteController;
     }
 
-    private IController createBettingTable() {
-        IController bettingController = createBetting();
-        IController userController = createUser();
+    private AController createBettingTable() {
+        AController bettingController = createBetting();
+        AController userController = createUser();
         IBettingTableModel bettingTableModel = new BettingTableModel();
         IBettingTableNode bettingTableNode = createBettingTableNode();
 
-        IBettingTableController bettingTableController = new BettingTableController(bettingTableModel, bettingTableNode);
+        AController bettingTableController = new BettingTableController(bettingTableModel, bettingTableNode);
 
         bettingTableController.addController("BettingController", bettingController);
         bettingTableController.addController("UserController", userController);

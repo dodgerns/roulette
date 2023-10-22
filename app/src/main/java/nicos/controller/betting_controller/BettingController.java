@@ -2,20 +2,19 @@ package nicos.controller.betting_controller;
 
 import java.util.HashMap;
 
-import nicos.controller.IController;
+import nicos.controller.AController;
 import nicos.model.betting.IBettingModel;
 import nicos.model.casino_chip.CasinoChip;
 import nicos.model.casino_chip.ICasinoChip;
 import nicos.view.components.IComponent;
 import nicos.view.betting_node.IBettingNode;
 
-public class BettingController implements IBettingController{
-    private HashMap<String, IController> controllers;
+public class BettingController extends AController implements IBettingController{
     private IBettingNode bettingNode;
     private IBettingModel bettingModel;
 
     public BettingController(IBettingModel bettingModel, IBettingNode bettingNode){
-        this.controllers = new HashMap<>();
+        super();
         this.bettingModel = bettingModel;
         this.bettingNode = bettingNode;
     }
@@ -27,11 +26,6 @@ public class BettingController implements IBettingController{
 
     @Override
     public void setConfig() {
-    }
-
-    @Override
-    public void addController(String key, IController controller) {
-        controllers.put(key, controller);
     }
 
     @Override

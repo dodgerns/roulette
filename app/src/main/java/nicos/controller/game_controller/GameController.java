@@ -2,7 +2,8 @@ package nicos.controller.game_controller;
 
 import java.util.HashMap;
 
-import nicos.controller.IController;
+import nicos.controller.AController;
+import nicos.controller.AController;
 import nicos.controller.roulette_controller.IRoulleteController;
 import nicos.controller.betting_table_controller.BettingTableController;
 import nicos.controller.betting_table_controller.IBettingTableController;
@@ -12,16 +13,15 @@ import nicos.view.components.InformationComponent;
 import nicos.view.game_node.IGameNode;
 
 
-public class GameController implements IGameController {
-    private HashMap<String, IController> controllers;
+public class GameController extends AController implements IGameController {
     private IGameModel gameModel;
     private IGameNode gameNode;
 
     public GameController(){
-        controllers = new HashMap<>();
+        super();
     }
     public GameController(IGameModel gameModel, IGameNode gameNode){
-        controllers = new HashMap<>();
+        super();
         this.gameModel = gameModel;
         this.gameNode = gameNode;
     }
@@ -30,7 +30,7 @@ public class GameController implements IGameController {
     public HashMap<String, IComponent> getComponents() {
         HashMap<String, IComponent> components = new HashMap<>();
         components.putAll(gameNode.getComponents());
-        for (IController controller : controllers.values()) {
+        for (AController controller : controllers.values()) {
             components.putAll(controller.getComponents());
         }
         return components;
@@ -64,7 +64,7 @@ public class GameController implements IGameController {
     }
 
     @Override
-    public void addController(String key, IController Controller) {
+    public void addController(String key, AController Controller) {
         controllers.put(key, Controller);
     }
 

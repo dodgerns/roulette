@@ -1,6 +1,6 @@
 package nicos.controller.roulette_controller;
 
-import nicos.controller.IController;
+import nicos.controller.AController;
 import nicos.model.roulette.IRouletteModel;
 import nicos.view.components.IComponent;
 import nicos.view.roulette_node.IRouletteNode;
@@ -8,13 +8,12 @@ import nicos.view.roulette_node.IRouletteNode;
 import java.util.HashMap;
 
 
-public class RouletteController implements IRoulleteController{
-    private HashMap<String, IController> controllers;
+public class RouletteController extends AController implements IRoulleteController{
     private IRouletteModel rouletteModel;
     private IRouletteNode rouletteNode;
 
     public RouletteController(IRouletteModel rouletteModel, IRouletteNode rouletteNode){
-        this.controllers = new HashMap<>();
+        super();
         this.rouletteModel = rouletteModel;
         this.rouletteNode = rouletteNode;
     }
@@ -34,11 +33,6 @@ public class RouletteController implements IRoulleteController{
     public void spinRoulette(){
         rouletteModel.generateNumber();
         rouletteNode.changeState("messageWinningNumber", rouletteModel.getNumber().toString());
-    }
-
-    @Override
-    public void addController(String key, IController controller) {
-        controllers.put(key, controller);
     }
 
     @Override

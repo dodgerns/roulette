@@ -1,9 +1,9 @@
 package nicos.controller.betting_table_controller;
 
-import nicos.controller.IController;
 
-public interface IBettingTableController extends IController{
+public interface IBettingTableController{
 
+    
     Boolean hasWinner(String winningNumber);
     public void claimBet(String winningNumber);
     void calculatePrizes(String winningNumber);

@@ -1,9 +1,13 @@
 package nicos.view.game_node;
 
-import nicos.commons.Callback;
-import nicos.view.INode;
+import java.util.HashMap;
 
-public interface IGameNode extends INode {
+import nicos.commons.Callback;
+import nicos.view.components.IComponent;
+
+public interface IGameNode {
     void changeState(String key, String newState);
     void setAction(String key, Callback callback);
+    public HashMap<String, IComponent> getComponents();
+    public void addComponent(String key, IComponent component);
 }

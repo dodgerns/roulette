@@ -1,34 +1,13 @@
 package nicos.view.betting_node;
 
-import java.util.HashMap;
-
-import nicos.commons.Callback;
+import nicos.view.ANode;
 import nicos.view.components.IComponent;
 
-public class BettingNode implements IBettingNode{
-    private HashMap<String, IComponent> components;
+public class BettingNode extends ANode implements IBettingNode{
+    
 
     public BettingNode(){
-        components = new HashMap<>();
-    }
-    @Override
-    public void addComponent(String key, IComponent component) {
-        components.put(key, component);
-    }
-
-    @Override
-    public void addComponents(HashMap<String, IComponent> components) {
-        this.components = components;
-    }
-
-    @Override
-    public void setComponents(HashMap<String, IComponent> components) {
-        this.components.putAll(components);
-    }
-
-    @Override
-    public HashMap<String, IComponent> getComponents() {
-        return components;
+        super();
     }
 
     @Override
@@ -37,13 +16,4 @@ public class BettingNode implements IBettingNode{
         component.changeText(newState);
     }
 
-    @Override
-    public void setAction(String key, Callback callback) {
-        IComponent component = components.get(key);
-        component.setAction(callback);
-    }
-    @Override
-    public IComponent getComponent(String nameComponent) {
-        return components.get(nameComponent);
-    }
 }

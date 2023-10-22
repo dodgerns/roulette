@@ -1,9 +1,8 @@
 package nicos.controller.roulette_controller;
 
 import java.util.HashMap;
-import nicos.controller.IController;
 
-public interface IRoulleteController extends IController{
+public interface IRoulleteController{
     void spinRoulette();
     HashMap<String, String> getStatus();
 }

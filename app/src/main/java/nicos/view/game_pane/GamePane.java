@@ -13,12 +13,12 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import nicos.view.ANode;
 import nicos.view.components.IComponent;
-import nicos.view.game_node.IGameNode;
 
 public class GamePane extends Pane{
 
-    private HashMap<String, IGameNode> nodes;
+    private HashMap<String, ANode> nodes;
     private Text mousePositionText;
 
     public GamePane() {
@@ -49,7 +49,7 @@ public class GamePane extends Pane{
         )));
     }
 
-    public void addStage(String key, IGameNode stage) {
+    public void addStage(String key, ANode stage) {
         this.nodes.put(key, stage);
         HashMap<String, IComponent> components= stage.getComponents();
         for (IComponent component : components.values()) {
@@ -58,7 +58,7 @@ public class GamePane extends Pane{
         }
     }
 
-    public HashMap<String, IGameNode> getnodes(){
+    public HashMap<String, ANode> getnodes(){
         return nodes;
     }
 }
