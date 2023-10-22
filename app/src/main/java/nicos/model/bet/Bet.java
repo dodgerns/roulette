@@ -1,12 +1,27 @@
 package nicos.model.bet;
 
-import java.util.HashMap;
 
 public class Bet implements IBet{
-    // chipvalue, chipamount
-    private HashMap<String, String> bet;
 
-    public Bet(){
-        bet = new HashMap<>();
+    private String chipValue;
+    private String chipAmount;
+    
+    public Bet(){}
+    
+    public String getChipAmount() {
+        return chipAmount;
     }
+
+    public void setChipAmount(String chipAmount) {
+        this.chipAmount = chipAmount;
+    }
+
+    public String getChipValue() {
+        return chipValue;
+    }
+
+    public void setChipValue(String chipValue) {
+        this.chipValue = chipValue;
+    }
+
 }

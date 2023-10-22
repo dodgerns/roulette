@@ -9,6 +9,12 @@ public class ButtonComponent extends Button implements IComponent{
         super(text);
     }
 
+    public ButtonComponent(String text, int positionX, int positionY) {
+        super(text);
+        setLayoutX(positionX);
+        setLayoutY(positionY);
+    }
+
     @Override
     public void changeText(String newText) {
         setText(newText);

@@ -15,5 +15,5 @@ public interface ICasinoChip {
     public HashMap<Integer, Integer> getChips();
     public void takeChips(CasinoChip chipsTaken);
     public void claimBet(ICasinoChip chipsWon);
-    
+    public void multiplyChip(String multiplier);
 }

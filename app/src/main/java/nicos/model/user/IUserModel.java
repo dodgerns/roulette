@@ -9,4 +9,5 @@ public interface IUserModel {
     public boolean hasEnoughChips(CasinoChip chips);
     public void takeBet(CasinoChip chipsTaken);
     public void claimBet(ICasinoChip chipsWon);
+    public ICasinoChip getChips();
 }

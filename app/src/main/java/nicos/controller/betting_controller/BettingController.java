@@ -53,5 +53,10 @@ public class BettingController implements IBettingController{
     public void calculatePrizes(String winningNumber) {
         bettingModel.calculatePrizes(winningNumber);
     }
+
+    @Override
+    public void newRound() {
+        bettingModel.newRound();
+    }
     
 }

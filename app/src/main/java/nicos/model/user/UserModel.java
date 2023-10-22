@@ -33,5 +33,8 @@ public class UserModel implements IUserModel{
     public void claimBet(ICasinoChip chipsWon) {
         casinoChip.claimBet(chipsWon);
     }
-    
+    @Override
+    public ICasinoChip getChips(){
+        return casinoChip;
+    }
 }

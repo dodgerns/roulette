@@ -1,6 +1,10 @@
 package nicos.view.betting_table_node;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import nicos.commons.Callback;
 import nicos.view.components.IComponent;
@@ -47,5 +51,12 @@ public class BettingTableNode implements IBettingTableNode{
     @Override
     public void addComponents(HashMap<String, IComponent> components) {
         this.components.putAll(components);
+    }
+
+    @Override
+    public void newRound(String newState) {
+        for(IComponent component: components.values()){
+            component.changeText(newState);
+        }
     }
 }

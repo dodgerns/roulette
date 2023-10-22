@@ -10,11 +10,12 @@ import nicos.model.casino_chip.ICasinoChip;
 public class BettingModel implements IBettingModel{
     private HashMap<String, ICasinoChip> betting;
     private HashMap<String, ICasinoChip> winningBet;
-    private HashMap<String, String> betPrize;
+    private HashMap<String, String> bettingPrizes;
 
     public BettingModel(){
         betting = new HashMap<>();
         winningBet = new HashMap<>();
+        bettingPrizes = new HashMap<>();
     }
 
     @Override
@@ -46,8 +47,29 @@ public class BettingModel implements IBettingModel{
             String betNumbers = bet.getKey().split("!")[1];
             List<String> betNumbersList = Arrays.asList(betNumbers.split("-"));
             if(betNumbersList.contains(winningNumber)){
-                winningBet.put(key, bet.getValue());
+                ICasinoChip prize = bet.getValue();
+                String multiplier = bettingPrizes.get(Integer.toString(betNumbersList.size()));
+                prize.multiplyChip(multiplier);
+                
+                winningBet.put(key, prize);
             }
         }
+    }
+
+    
+    @Override
+    public void addPrize(String key, String prize) {
+        bettingPrizes.put(key, prize);
+    }
+
+    @Override
+    public void addPrizes(HashMap<String, String> prizes) {
+        bettingPrizes.putAll(prizes);
+    }
+
+    @Override
+    public void newRound() {
+        betting.clear();
+        winningBet.clear();
     }
 }

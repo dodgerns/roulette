@@ -5,9 +5,11 @@ import java.util.HashMap;
 import nicos.model.casino_chip.ICasinoChip;
 
 public class BettingTableModel implements IBettingTableModel {
+    private Boolean bettingTableIsBlocked;
     private HashMap<String, ICasinoChip> betting;
 
     public BettingTableModel(){
+        bettingTableIsBlocked = false;
         betting = new HashMap<>();
     }
 
@@ -30,4 +32,19 @@ public class BettingTableModel implements IBettingTableModel {
     public Boolean hasWinner(String winningNumber) {
         return betting.containsKey(winningNumber);
     }
+
+    @Override
+    public boolean isBlocked() {
+        return bettingTableIsBlocked;
+    }
+
+    @Override
+    public void blockBetting() {
+        bettingTableIsBlocked = true;
+    }
+    @Override
+    public void unblockBetting() {
+        bettingTableIsBlocked = false;
+    }
+    
 }

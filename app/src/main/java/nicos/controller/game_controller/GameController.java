@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import nicos.controller.IController;
 import nicos.controller.roulette_controller.IRoulleteController;
+import nicos.controller.betting_table_controller.BettingTableController;
 import nicos.controller.betting_table_controller.IBettingTableController;
 import nicos.model.game.IGameModel;
 import nicos.view.components.IComponent;
@@ -37,7 +38,29 @@ public class GameController implements IGameController {
 
     @Override
     public void setConfig() {
-        gameNode.setAction("startGame", ()->startGame());
+        gameNode.setAction("StartGame", ()->startGame());
+        gameNode.setAction("UserState", ()->userState("UserController"));
+        gameNode.setAction("NewRound", ()->newRound());
+    }
+
+    public void newRound() {
+        gameNode.changeState("StartGame", "Inicar Ronda");
+        gameNode.setAction("StartGame", ()->startGame());
+        BettingTableController bettingTableController = (BettingTableController) controllers.get("BettingTableController");
+        bettingTableController.newRound();
+        bettingTableController.unblockBettingTable();
+    }
+
+    public void endRound() {
+        gameNode.changeState("StartGame", "Ronda Terminada");
+        gameNode.setAction("StartGame", ()->{});
+        IBettingTableController bettingTableController = (IBettingTableController) controllers.get("BettingTableController");
+        bettingTableController.blockBettingTable();
+    }
+
+    private void userState(String nameUser) {
+        IBettingTableController bettingTableController = (IBettingTableController) controllers.get("BettingTableController");
+        bettingTableController.userState(nameUser);
     }
 
     @Override
@@ -46,18 +69,22 @@ public class GameController implements IGameController {
     }
 
     public void startGame(){
-        gameNode.changeState("startGame", "Jugando");
+        gameNode.changeState("StartGame", "Jugando");
         IRoulleteController rouletteController = (IRoulleteController) controllers.get("RouletteController");
         rouletteController.spinRoulette();
         String winningNumber = rouletteController.getStatus().get("WinningNumber");
-        IBettingTableController beatingTableController = (IBettingTableController) controllers.get("BettingTableController");
-        boolean existWinner = beatingTableController.hasWinner(winningNumber);
+        IBettingTableController bettingTableController = (IBettingTableController) controllers.get("BettingTableController");
+        boolean existWinner = bettingTableController.hasWinner(winningNumber);
         if (existWinner) {
             InformationComponent informationComponent = new InformationComponent("Gano", "Existe ganador");
             informationComponent.showMessage();
-            beatingTableController.calculatePrizes(winningNumber);
-            beatingTableController.claimBet(winningNumber);
+            bettingTableController.calculatePrizes(winningNumber);
+            bettingTableController.claimBet(winningNumber);
+        }else{
+            InformationComponent informationComponent = new InformationComponent("No hay ganadores", "No hay ganador");
+            informationComponent.showMessage();
         }
+        endRound();
         System.out.println(winningNumber);
         System.out.println(existWinner);
     }

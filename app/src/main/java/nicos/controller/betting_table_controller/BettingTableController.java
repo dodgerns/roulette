@@ -53,14 +53,16 @@ public class BettingTableController implements IBettingTableController{
     }
 
     private void doBet(String nameNode){
-        CasinoChip chips = getBet();
-        IUserController user = (UserController)controllers.get("UserController");
-        IBettingController bettingController = (BettingController)controllers.get("BettingController");
-        if (chips.hasChips() && user.hasEnoughChips(chips)) {
-            user.takeBet(chips);
-            String userId= user.getId();
-            bettingController.addBet( userId, nameNode, chips);
-            bettingTableNode.changeState(nameNode, "●");
+        if(!bettingTableModel.isBlocked()){
+            CasinoChip chips = getBet();
+            IUserController user = (UserController)controllers.get("UserController");
+            IBettingController bettingController = (BettingController)controllers.get("BettingController");
+            if (chips.hasChips() && user.hasEnoughChips(chips)) {
+                user.takeBet(chips);
+                String userId= user.getId();
+                bettingController.addBet( userId, nameNode, chips);
+                bettingTableNode.changeState(nameNode, "●");
+            }
         }
     }
 
@@ -96,5 +98,23 @@ public class BettingTableController implements IBettingTableController{
     public void calculatePrizes(String winningNumber) {
         IBettingController bettingController = (BettingController)controllers.get("BettingController");
         bettingController.calculatePrizes(winningNumber);
+    }
+    @Override
+    public void userState(String nameUser) {
+        IUserController user = (UserController)controllers.get("UserController");
+        user.actualState();
+    }
+    public void newRound() {
+        IBettingController bettingController = (BettingController)controllers.get("BettingController");
+        bettingController.newRound();
+        bettingTableNode.newRound("○");
+    }
+    @Override
+    public void blockBettingTable() {
+        bettingTableModel.blockBetting();
+    }
+    @Override
+    public void unblockBettingTable() {
+        bettingTableModel.unblockBetting();
     }
 }

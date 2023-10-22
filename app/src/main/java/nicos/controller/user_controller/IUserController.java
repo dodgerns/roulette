@@ -11,4 +11,5 @@ public interface IUserController extends IController{
     public String getId();
     public boolean hasId(String userId);
     public void claimBet(ICasinoChip chipsWon);
+    public void actualState();
 }

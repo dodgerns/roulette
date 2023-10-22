@@ -64,11 +64,20 @@ public class UserController implements IUserController{
     public void claimBet(ICasinoChip chipsWon) {
         String message = "Se te agrega:\n";
         for(Map.Entry<Integer, Integer> chip: chipsWon.getChips().entrySet()){
-            message += chip.getValue()+"fichas de "+chip.getKey()+"\n";
+            message += chip.getValue()+" fichas de "+chip.getKey()+"\n";
         }
         InformationComponent informationComponent = new InformationComponent("Ganaste", message);
         informationComponent.showMessage();
         userModel.claimBet(chipsWon);
     }
-    
+
+    @Override
+    public void actualState() {
+        String message = "Usted tiene:\n";
+        for(Map.Entry<Integer, Integer> chip: userModel.getChips().getChips().entrySet()){
+            message += chip.getValue()+" fichas de "+chip.getKey()+"\n";
+        }
+        InformationComponent informationComponent = new InformationComponent("Estado", message);
+        informationComponent.showMessage();
+    }
 }

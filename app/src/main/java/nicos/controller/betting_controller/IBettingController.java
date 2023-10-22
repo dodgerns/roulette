@@ -15,4 +15,5 @@ public interface IBettingController extends IController{
     public void addBet(String idUser, String nameNode, CasinoChip chips);
     public HashMap<String, ICasinoChip> claimBet(String winningNumber);
     public void calculatePrizes(String winningNumber);
+    public void newRound();
 }

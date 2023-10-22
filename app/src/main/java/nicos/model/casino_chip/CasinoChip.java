@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class CasinoChip implements ICasinoChip{
     
+    //chip value, chip amount
     private HashMap<Integer, Integer> chips;
 
     public CasinoChip(){
@@ -94,6 +95,24 @@ public class CasinoChip implements ICasinoChip{
                 int amount = chip.getValue();
                 int actualAmount = chips.get(chip.getKey());
                 chips.put(chip.getKey(), actualAmount + amount);
+            }else{
+                chips.put(chip.getKey(), chip.getValue());
+            }
+        }
+    }
+
+    @Override
+    public void multiplyChip(String multiplier){
+        Double multiplierDouble = Double.parseDouble(multiplier);
+        for(Map.Entry<Integer, Integer> chip: chips.entrySet()){
+            Double prize = chip.getValue() * multiplierDouble;
+            chips.put(chip.getKey(), chip.getValue()+prize.intValue());
+            if (prize != prize.intValue()){
+                Double partDecimal = prize-prize.intValue();
+                Double newKey = chip.getKey() * partDecimal;
+                if(newKey == newKey.intValue()){
+                    chips.put(newKey.intValue(), 1);
+                }
             }
         }
     }
