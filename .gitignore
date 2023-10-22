@@ -6,3 +6,6 @@ build
 
 # Ignore vs code settings
 .vscode
+
+# Ignore bin files
+bin

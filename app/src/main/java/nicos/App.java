@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import nicos.controller.IController;
+import nicos.controller.betting_controller.BettingController;
+import nicos.controller.betting_controller.IBettingController;
 import nicos.controller.betting_table_controller.BettingTableController;
 import nicos.controller.betting_table_controller.IBettingTableController;
 import nicos.controller.game_controller.GameController;
@@ -12,19 +14,30 @@ import nicos.controller.roulette_controller.IRoulleteController;
 import nicos.controller.roulette_controller.RouletteController;
 import nicos.controller.rules_controller.IRulesController;
 import nicos.controller.rules_controller.RulesController;
+import nicos.controller.user_controller.IUserController;
+import nicos.controller.user_controller.UserController;
+import nicos.model.betting.BettingModel;
+import nicos.model.betting.IBettingModel;
 import nicos.model.betting_table.BettingTableModel;
 import nicos.model.betting_table.IBettingTableModel;
+import nicos.model.casino_chip.CasinoChip;
+import nicos.model.casino_chip.ICasinoChip;
 import nicos.model.game.GameModel;
 import nicos.model.game.IGameModel;
 import nicos.model.roulette.IRouletteModel;
 import nicos.model.roulette.RouletteModel;
 import nicos.model.rules.IRulesModel;
 import nicos.model.rules.RulesModel;
+import nicos.model.user.IUserModel;
+import nicos.model.user.UserModel;
+import nicos.view.betting_node.BettingNode;
+import nicos.view.betting_node.IBettingNode;
 import nicos.view.betting_table_node.BettingTableNode;
 import nicos.view.betting_table_node.IBettingTableNode;
 import nicos.view.components.IComponent;
 import nicos.view.components.MessageComponent;
 import nicos.view.components.OnClickSectorComponent;
+import nicos.view.components.TextInputComponent;
 import nicos.view.game_node.GameNode;
 import nicos.view.game_node.IGameNode;
 import nicos.view.game_pane.GamePane;
@@ -32,6 +45,8 @@ import nicos.view.roulette_node.IRouletteNode;
 import nicos.view.roulette_node.RouletteNode;
 import nicos.view.rules_node.IRulesNode;
 import nicos.view.rules_node.RulesNode;
+import nicos.view.user_node.IUserNode;
+import nicos.view.user_node.UserNode;
 
 public class App extends Application{
     public static void main(String[] args) {
@@ -43,12 +58,10 @@ public class App extends Application{
         IController gameController = createGame();
         IController rouletteController = createRoullete();
         IController bettingTableController = createBettingTable();
-        IController rulesController = createRules();
 
-        gameController.addController("RulesController", rulesController);
         gameController.addController("RouletteController", rouletteController);
         gameController.addController("BettingTableController", bettingTableController);
-        
+
 
         IGameNode gameNode = new GameNode();
         gameNode.addComponents(gameController.getComponents());
@@ -65,6 +78,25 @@ public class App extends Application{
         stage.show();
     }
 
+    private IController createBetting() {
+        IBettingNode bettingNode = new BettingNode();
+        IBettingModel bettingModel = new BettingModel();
+        IBettingController bettingController = new BettingController(bettingModel, bettingNode);
+
+        return bettingController;
+    }
+
+    private IController createUser() {
+        IUserNode userNode = new UserNode();
+        IUserModel userModel = new UserModel();
+        IUserController userController = new UserController(userModel, userNode);
+        ICasinoChip casinoChip = new CasinoChip();
+        casinoChip.setChips(100, 10);
+        userModel.setCasinoChip(casinoChip);
+
+        return userController;
+    }
+
     private IController createRules() {
         IRulesNode rulesNode = new RulesNode();
         IRulesModel rulesModel = new RulesModel();
@@ -73,9 +105,15 @@ public class App extends Application{
     }
 
     private IController createBettingTable() {
+        IController bettingController = createBetting();
+        IController userController = createUser();
         IBettingTableModel bettingTableModel = new BettingTableModel();
         IBettingTableNode bettingTableNode = createBettingTableNode();
+
         IBettingTableController bettingTableController = new BettingTableController(bettingTableModel, bettingTableNode);
+
+        bettingTableController.addController("BettingController", bettingController);
+        bettingTableController.addController("UserController", userController);
 
         bettingTableController.setConfig();
 

@@ -9,7 +9,8 @@ public class RouletteModel implements IRouletteModel{
     public RouletteModel(){}
 
     public Integer getNumber(){
-        return number;
+        return 5;
+        //return number;
     }
 
     public void generateNumber(){

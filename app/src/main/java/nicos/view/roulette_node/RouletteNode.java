@@ -40,4 +40,9 @@ public class RouletteNode implements IRouletteNode{
     public void addComponents(HashMap<String, IComponent> components) {
         this.components.putAll(components);
     }
+
+    @Override
+    public IComponent getComponent(String nameComponent) {
+        return components.get(nameComponent);
+    }
 }

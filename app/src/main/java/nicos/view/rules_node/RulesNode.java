@@ -42,5 +42,9 @@ public class RulesNode implements IRulesNode{
         IComponent component = components.get(key);
         component.setAction(callback);
     }
+    @Override
+    public IComponent getComponent(String nameComponent) {
+        return components.get(nameComponent);
+    }
     
 }

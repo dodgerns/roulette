@@ -21,6 +21,11 @@ public class BettingTableNode implements IBettingTableNode{
     public HashMap<String, IComponent> getComponents(){
         return components;
     }
+
+    @Override
+    public IComponent getComponent(String nameComponent){
+        return components.get(nameComponent);
+    }
     
     @Override
     public void changeState(String key, String newState){
