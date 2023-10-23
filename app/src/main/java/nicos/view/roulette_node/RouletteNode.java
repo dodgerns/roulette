@@ -11,7 +11,9 @@ public class RouletteNode extends ANode implements IRouletteNode{
 
     @Override
     public void changeState(String key, String newState) {
-        IComponent component = components.get(key);
-        component.changeText(newState);
+        if(components.get(key)!=null){
+            IComponent component = components.get(key);
+            component.changeText(newState);
+        }
     }
 }

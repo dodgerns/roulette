@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import nicos.controller.AController;
 import nicos.model.betting.IBettingModel;
-import nicos.model.casino_chip.CasinoChip;
 import nicos.model.casino_chip.ICasinoChip;
 import nicos.view.components.IComponent;
 import nicos.view.betting_node.IBettingNode;
@@ -29,13 +28,13 @@ public class BettingController extends AController implements IBettingController
     }
 
     @Override
-    public boolean hasWinner(String winningNumber) {
+    public Boolean hasWinner(String winningNumber) {
         return bettingModel.hasWinner(winningNumber);
     }
 
     @Override
-    public void addBet(String idUser, String nameNode, CasinoChip chips) {
-        bettingModel.addBet(idUser, nameNode, chips);
+    public void addBet(String idUser, String winningNumber, ICasinoChip chips) {
+        bettingModel.addBet(idUser, winningNumber, chips);
     }
 
     @Override

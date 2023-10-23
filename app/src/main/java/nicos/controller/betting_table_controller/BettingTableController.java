@@ -53,7 +53,7 @@ public class BettingTableController extends AController implements IBettingTable
 
     private void doBet(String nameNode){
         if(!bettingTableModel.isBlocked()){
-            CasinoChip chips = getBet();
+            ICasinoChip chips = getBet();
             IUserController user = (UserController)controllers.get("UserController");
             IBettingController bettingController = (BettingController)controllers.get("BettingController");
             if (chips.hasChips() && user.hasEnoughChips(chips)) {
@@ -65,10 +65,10 @@ public class BettingTableController extends AController implements IBettingTable
         }
     }
 
-    public CasinoChip getBet(){
+    public ICasinoChip getBet(){
         TextInputComponent textInputComponent = new TextInputComponent("Apuesta", "valor ficha-cantidad fichas: '100-3'");
         String betString = textInputComponent.getInput();
-        CasinoChip betChips = new CasinoChip(betString);
+        ICasinoChip betChips = new CasinoChip(betString);
         return betChips;
     }
 

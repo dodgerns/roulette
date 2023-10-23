@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Random;
 
 import nicos.controller.AController;
-import nicos.model.casino_chip.CasinoChip;
 import nicos.model.casino_chip.ICasinoChip;
 import nicos.model.user.IUserModel;
 import nicos.view.components.IComponent;
@@ -43,16 +42,16 @@ public class UserController extends AController implements IUserController{
     }
 
     @Override
-    public boolean hasEnoughChips(CasinoChip chips) {
+    public Boolean hasEnoughChips(ICasinoChip chips) {
         return userModel.hasEnoughChips(chips);
     }
 
     @Override
-    public void takeBet(CasinoChip chipsTaken) {
+    public void takeBet(ICasinoChip chipsTaken) {
         userModel.takeBet(chipsTaken);
     }
     @Override
-    public boolean hasId(String userId) {
+    public Boolean hasId(String userId) {
         return id.equals(userId);   
     }
     @Override

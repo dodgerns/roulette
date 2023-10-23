@@ -8,11 +8,12 @@ public class RouletteModel implements IRouletteModel{
     private int max=36;
     public RouletteModel(){}
 
+    @Override
     public Integer getNumber(){
-        return 5;
-        //return number;
+        return number;
     }
 
+    @Override
     public void generateNumber(){
         Random random = new Random();
         number = random.nextInt((max - min) + 1) + min;

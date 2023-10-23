@@ -53,16 +53,21 @@ public class CasinoChip implements ICasinoChip{
 
     @Override
     public Boolean hasChipAmount(int chipValue, int chipAmount) {
-        int actualChipAmount = chips.get(chipValue);
-        return actualChipAmount >= chipAmount;
+        if(existChipValue(chipValue)){
+            int actualChipAmount = chips.get(chipValue);
+            return actualChipAmount >= chipAmount;
+        }
+        return false;
     }
 
     @Override
     public Boolean hasChipAmount(ICasinoChip betChip) {
         boolean hasAmount = true;
         for(Map.Entry<Integer, Integer> chip: betChip.getChips().entrySet()){
-            if(chips.containsKey(chip.getKey())){
+            if(hasChipAmount(chip.getKey(), chip.getValue())){
                 hasAmount = hasAmount && (chips.get(chip.getKey()) >= chip.getValue()) && (chips.get(chip.getKey())>0);
+            }else{
+                hasAmount = false;
             }
         }
         return hasAmount;
@@ -79,9 +84,9 @@ public class CasinoChip implements ICasinoChip{
     }
 
     @Override
-    public void takeChips(CasinoChip chipsTaken) {
+    public void takeChips(ICasinoChip chipsTaken) {
         for(Map.Entry<Integer, Integer> chip: chipsTaken.getChips().entrySet()){
-            if(chips.containsKey(chip.getKey())){
+            if(hasChipAmount(chip.getKey(), chip.getValue())){
                 int newAmount = chips.get(chip.getKey())-chip.getValue();
                 chips.put(chip.getKey(), newAmount);
             }

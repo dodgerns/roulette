@@ -13,7 +13,7 @@ public interface ICasinoChip {
     public Boolean hasChips();
     public Boolean hasChipAmount(ICasinoChip betChip);
     public HashMap<Integer, Integer> getChips();
-    public void takeChips(CasinoChip chipsTaken);
+    public void takeChips(ICasinoChip chipsTaken);
     public void claimBet(ICasinoChip chipsWon);
     public void multiplyChip(String multiplier);
 }

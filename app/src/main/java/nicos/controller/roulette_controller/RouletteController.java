@@ -26,6 +26,7 @@ public class RouletteController extends AController implements IRoulleteControll
         return rouletteNode.getComponents();
     }
 
+    @Override
     public void setConfig(){
     }
 

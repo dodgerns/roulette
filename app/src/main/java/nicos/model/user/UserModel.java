@@ -1,8 +1,5 @@
 package nicos.model.user;
 
-import java.util.Map;
-
-import nicos.model.casino_chip.CasinoChip;
 import nicos.model.casino_chip.ICasinoChip;
 
 public class UserModel implements IUserModel{
@@ -11,21 +8,23 @@ public class UserModel implements IUserModel{
     public UserModel(){
     }
 
+    @Override
     public void setCasinoChip(ICasinoChip casinoChip){
         this.casinoChip = casinoChip;
     }
 
+    @Override
     public Boolean hasAmountChip(int chipValue, int chipAmount){
         return casinoChip.hasChipAmount(chipValue, chipAmount);
     }
 
     @Override
-    public boolean hasEnoughChips(CasinoChip chips) {
+    public Boolean hasEnoughChips(ICasinoChip chips) {
         return casinoChip.hasChipAmount(chips);
     }
 
     @Override
-    public void takeBet(CasinoChip chipsTaken) {
+    public void takeBet(ICasinoChip chipsTaken) {
         casinoChip.takeChips(chipsTaken);
     }
 
