@@ -20,7 +20,7 @@ public class CasinoChip implements ICasinoChip{
     @Override
     public void setChips(String chipsValueAmount){
         String[] chips = chipsValueAmount.split("-");
-        if(chips.length==2){
+        if(chips.length==2&& chips[0].matches("\\d+") && chips[1].matches("\\d+")){
             this.chips.put(Integer.parseInt(chips[0]), Integer.parseInt(chips[1]));
         }
     }
